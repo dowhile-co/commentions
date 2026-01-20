@@ -20,7 +20,7 @@ class Reactions extends Component
             'comment:reaction:toggled',
             reaction: $reaction,
             commentId: $this->comment->getId()
-        )->to(Comment::class);
+        )->to('commentions::comment');
 
         unset($this->reactionSummary);
     }

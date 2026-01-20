@@ -44,11 +44,17 @@ class CommentionsServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
-        Livewire::component('commentions::comment', Comment::class);
-        Livewire::component('commentions::comment-list', CommentList::class);
-        Livewire::component('commentions::comments', Comments::class);
-        Livewire::component('commentions::reactions', Reactions::class);
-        Livewire::component('commentions::subscription-sidebar', SubscriptionSidebar::class);
+        $livewire = app('livewire');
+
+        if (method_exists($livewire, 'addNamespace')) {
+            $livewire->addNamespace('commentions', classNamespace: __NAMESPACE__ . '\\Livewire');
+        } else {
+            $livewire->component('commentions::comment', Comment::class);
+            $livewire->component('commentions::comment-list', CommentList::class);
+            $livewire->component('commentions::comments', Comments::class);
+            $livewire->component('commentions::reactions', Reactions::class);
+            $livewire->component('commentions::subscription-sidebar', SubscriptionSidebar::class);
+        }
 
         FilamentAsset::register(
             [
